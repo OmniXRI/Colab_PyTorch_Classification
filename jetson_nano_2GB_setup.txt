@@ -1,0 +1,68 @@
+% 下載簡化版貓狗資料集
+https://storage.googleapis.com/mledu-datasets/cats_and_dogs_filtered.zip
+
+% 更新系統
+sudo apt-get update
+sudo apt-get upgrade
+
+% 檢查記憶體使用狀況
+free -m
+
+% 檢查磁碟使用狀況
+df -h
+
+% 設定自動開機執行VNC Server
+
+舊版：
+cd /usr/lib/systemd/user/graphical-session.target.wants
+sudo ln -s ../vino-server.service ./.
+
+2GB版：
+mkdir -p ~/.config/autostart
+cp /usr/share/applications/vino-server.desktop ~/.config/autostart/.
+
+% 設定VNC Server參數及密碼
+gsettings set org.gnome.Vino prompt-enabled false
+gsettings set org.gnome.Vino require-encryption false
+gsettings set org.gnome.Vino authentication-methods "['vnc']"
+gsettings set org.gnome.Vino vnc-password $(echo -n ‘自定義密碼'|base64)
+
+% 重新開機
+sudo reboot
+
+% 安裝VNC Viewer
+https://www.realvnc.com/en/connect/download/viewer/
+
+% Python 3.6安裝PyTorch方式：
+% ，安裝pip3及重要套件
+
+
+% 下載PyTorch 1.7.0版
+wget https://nvidia.box.com/shared/static/wa34qwrwtk9njtyarwt5nvo6imenfy26.whl -O torch-1.7.0-cp36-cp36m-linux_aarch64.whl
+
+% 安裝pip3 及 libopenblas-base
+sudo apt-get install python3-pip libopenblas-base libopenmpi-dev 
+
+% 用pip3安裝 Cython, numpy, torch
+pip3 install Cython
+pip3 install numpy torch-1.7.0-cp36-cp36m-linux_aarch64.whl
+
+% 安裝 matplotlib, 用pip3有問題
+python3 -m pip install -U pip
+python3 -m pip install -U matplotlib
+
+% 用pip3安裝 torchvision
+pip3 install torchvision
+
+
+% 從USB網路攝影機取得影像並儲存
+
+import cv2
+
+cap = cv2.VideoCapture(0)
+ret, frame = cap.read()
+cv2.imwrite('test.jpg',frame)
+cv2.imshow('Frame', frame)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
