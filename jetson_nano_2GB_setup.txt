@@ -1,3 +1,6 @@
+% 資料標註工具LabelImg 
+https://github.com/tzutalin/labelImg 
+
 % 下載簡化版貓狗資料集
 https://storage.googleapis.com/mledu-datasets/cats_and_dogs_filtered.zip
 
